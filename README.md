@@ -12,5 +12,4 @@ See [Getting Started](https://exercism.io/getting-started)
 ## Contribute
 See [how to contribute](https://exercism.io/contribute) or access Exercism on [GitHub](https://github.com/exercism)
 
-## License
-See [Terms of Service](https://exercism.io/terms-of-service)
+
