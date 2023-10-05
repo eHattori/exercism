@@ -1,41 +1,53 @@
- Instructions
+# Instructions
 
-In this exercise you will be writing code to help a freelancer communicate with their clients about the prices of certain projects. You will write a few utility functions to quickly calculate the costs for the clients.
+You are an avid bird watcher that keeps track of how many birds have visited your garden.
+Usually, you use a tally in a notebook to count the birds but you want to better work with your data.
+You already digitalized the bird counts per day for the past weeks that you kept in the notebook.
 
-## 1. Calculate the day rate given an hourly rate
+Now you want to determine the total number of birds that you counted, calculate the bird count for a specific week and correct a counting mistake.
 
-A client contacts the freelancer to enquire about their rates.
-The freelancer explains that they **_work 8 hours a day._**
-However, the freelancer knows only their hourly rates for the project.
-Help them estimate a day rate given an hourly rate.
+<!-- prettier-ignore-start -->
+~~~~exercism/note
+To practice, use a for loop to solve each of the tasks below.
+~~~~
+<!-- prettier-ignore-end -->
+
+## 1. Determine the total number of birds that you counted so far
+
+Let us start analyzing the data by getting a high-level view. Find out how many birds you counted in total since you started your logs.
+
+Implement a function `totalBirdCount` that accepts an array that contains the bird count per day. It should return the total number of birds that you counted.
 
 ```javascript
-dayRate(89);
-// => 712
+birdsPerDay = [2, 5, 0, 7, 4, 1, 3, 0, 2, 5, 0, 1, 3, 1];
+totalBirdCount(birdsPerDay);
+// => 34
 ```
 
-The day rate does not need to be rounded or changed to a "fixed" precision.
+## 2. Calculate the number of visiting birds in a specific week
 
-## 2. Calculate the number of workdays given a fixed budget
+Now that you got a general feel for your bird count numbers, you want to make a more fine-grained analysis.
 
-Another day, a project manager offers the freelancer to work on a project with a fixed budget.
-Given the fixed budget and the freelancer's hourly rate, help them calculate the number of days they would work until the budget is exhausted.
-The result _must_ be **rounded down** to the nearest whole number.
+Implement a function `birdsInWeek` that accepts an array of bird counts per day and a week number.
+It returns the total number of birds that you counted in that specific week. You can assume weeks are always tracked completely.
 
 ```javascript
-daysInBudget(20000, 89);
-// => 28
+birdsPerDay = [2, 5, 0, 7, 4, 1, 3, 0, 2, 5, 0, 1, 3, 1];
+birdsInWeek(birdsPerDay, 2);
+// => 12
 ```
 
-## 3. Calculate the discounted rate for large projects
+## 3. Fix a counting mistake
 
-Often, the freelancer's clients hire them for projects spanning over multiple months.
-In these cases, the freelancer decides to offer a discount for every full month, and the remaining days are billed at day rate.
-**_Every month has 22 billable days._**
-Help them estimate their cost for such projects, given an hourly rate, the number of days the project spans, and a monthly discount rate.
-The discount is always passed as a number, where `42%` becomes `0.42`. The result _must_ be **rounded up** to the nearest whole number.
+You realized that all the time you were trying to keep track of the birds, there was one hiding in a far corner of the garden.
+You figured out that this bird always spent every second day in your garden.
+You do not know exactly where it was in between those days but definitely not in your garden.
+Your bird watcher intuition also tells you that the bird was in your garden on the first day that you tracked in your list.
+
+Given this new information, write a function `fixBirdCountLog` that takes an array of birds counted per day as an argument. It should correct the counting mistake and return the modified array.
 
 ```javascript
-priceWithMonthlyDiscount(89, 230, 0.42);
-// => 97972
+birdsPerDay = [2, 5, 0, 7, 4, 1];
+fixBirdCountLog(birdsPerDay);
+// => [3, 5, 1, 7, 5, 1]
 ```
