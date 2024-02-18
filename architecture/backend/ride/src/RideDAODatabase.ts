@@ -22,5 +22,19 @@ export class RideDAODatabase implements RideDAO {
     await connection.$pool.end();
     return rideData;
   }
+
+  async getActiveRidesByPassengerId(passengerId: string): Promise<any> {
+    const connection = pgp()("postgres://postgres:123456@localhost:5432/app");
+    const ridesData = await connection.query("select * from cccat13.ride where passenger_id = $1 and status in ('requested', 'accepted', 'in_progress')", [passengerId]);
+    await connection.$pool.end();
+    return ridesData;
+  }
+
+  async getActiveRidesByDriverId(driverId: string): Promise<any> {
+    const connection = pgp()("postgres://postgres:123456@localhost:5432/app");
+    const ridesData = await connection.query("select * from cccat13.ride where driver_id = $1 and status in ('accepted', 'in_progress')", [driverId]);
+    await connection.$pool.end();
+    return ridesData;
+  }
 }
 
