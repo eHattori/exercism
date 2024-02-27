@@ -32,17 +32,16 @@ export default class RideService {
   }
 
   async acceptRide(input: any) {
-    const ride = await this.getRide(input.rideId);
-    if (ride.status !== 'requested') throw new Error("The Ride is not available");
     const account = await this.accountDAO.getById(input.driverId);
     if (!account.is_driver) throw new Error('Account is not from a driver');
+
+    const ride = await this.getRide(input.rideId);
+    
+    ride.accept(input.driverId);
 
     const activeRides = await this.rideDAO.getActiveRidesByDriverId(input.driverId);
     if (activeRides.length > 0) throw new Error('The Driver is not available');
 
-    ride.driverId = input.driverId;
-    ride.rideId = input.rideId;
-    ride.status = 'accepted';
     await this.rideDAO.update(ride);
   }
 }
