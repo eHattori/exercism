@@ -1,12 +1,13 @@
+import Ride from "./Ride";
 import RideDAO from "./RideDAO";
 import pgp from "pg-promise";
 
 export class RideDAODatabase implements RideDAO {
   constructor() { }
 
-  async save(ride: any) {
+  async save(ride: Ride) {
     const connection = pgp()("postgres://postgres:123456@localhost:5432/app");
-    await connection.query("insert into cccat13.ride (ride_id, passenger_id, from_lat, from_long, to_lat, to_long, status, date) values ($1, $2, $3, $4, $5, $6, $7, $8)", [ride.rideId, ride.passengerId, ride.from.lat, ride.from.long, ride.to.lat, ride.to.long, ride.status, ride.date]);
+    await connection.query("insert into cccat13.ride (ride_id, passenger_id, from_lat, from_long, to_lat, to_long, status, date) values ($1, $2, $3, $4, $5, $6, $7, $8)", [ride.rideId, ride.passengerId, ride.fromLat, ride.fromLong, ride.toLat, ride.toLong, ride.status, ride.date]);
     await connection.$pool.end();
   }
 
