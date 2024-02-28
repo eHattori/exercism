@@ -1,4 +1,13 @@
-import AccountService from "../src/AccountService";
+import GetAccount from "../src/GetAccount";
+import Signup from "../src/Signup";
+
+let signup: Signup;
+let getAccount: GetAccount;
+
+beforeAll(() => {
+  signup = new Signup();
+  getAccount = new GetAccount();
+});
 
 test('Deveria criar um passageiro', async () => {
   const input = {
@@ -7,9 +16,8 @@ test('Deveria criar um passageiro', async () => {
     cpf: '55032637076',
     isPassenger: true
   };
-  const accountService = new AccountService();
-  const output = await accountService.signup(input);
-  const account = await accountService.getAccount(output.accountId);
+  const output = await signup.execute(input);
+  const account = await getAccount.execute(output.accountId);
   expect(account?.accountId).toBeDefined();
   expect(account?.name).toBe(input.name);
   expect(account?.email).toBe(input.email);
@@ -23,9 +31,8 @@ test('Não deveria criar um passageiro repetido', async () => {
     cpf: '55032637076',
     isPassenger: true
   };
-  const accountService = new AccountService();
-  await accountService.signup(input);
-  await expect(accountService.signup(input)).rejects.toThrow('Account already exists')
+  await signup.execute(input);
+  await expect(signup.execute(input)).rejects.toThrow('Account already exists')
 });
 
 test('Não deveria criar um passageiro com o nome invalido', async () => {
@@ -35,8 +42,7 @@ test('Não deveria criar um passageiro com o nome invalido', async () => {
     cpf: '55032637076',
     isPassenger: true
   };
-  const accountService = new AccountService();
-  await expect(accountService.signup(input)).rejects.toThrow('Invalid name')
+  await expect(signup.execute(input)).rejects.toThrow('Invalid name')
 });
 
 test('Não deveria criar um passageiro com o cpf invalido', async () => {
@@ -46,8 +52,7 @@ test('Não deveria criar um passageiro com o cpf invalido', async () => {
     cpf: '55032637000',
     isPassenger: true
   };
-  const accountService = new AccountService();
-  await expect(accountService.signup(input)).rejects.toThrow('Invalid cpf')
+  await expect(signup.execute(input)).rejects.toThrow('Invalid cpf')
 });
 
 test('Não deveria criar um passageiro com o email invalido', async () => {
@@ -57,8 +62,7 @@ test('Não deveria criar um passageiro com o email invalido', async () => {
     cpf: '55032637076',
     isPassenger: true
   };
-  const accountService = new AccountService();
-  await expect(accountService.signup(input)).rejects.toThrow('Invalid email')
+  await expect(signup.execute(input)).rejects.toThrow('Invalid email')
 });
 
 test('Deveria criar um motorista', async () => {
@@ -69,9 +73,8 @@ test('Deveria criar um motorista', async () => {
     carPlate: 'AAA9999',
     isDriver: true
   };
-  const accountService = new AccountService();
-  const output = await accountService.signup(input);
-  const account = await accountService.getAccount(output.accountId);
+  const output = await signup.execute(input);
+  const account = await getAccount.execute(output.accountId);
   expect(account?.accountId).toBeDefined();
   expect(account?.name).toBe(input.name);
   expect(account?.email).toBe(input.email);
@@ -88,6 +91,5 @@ test('Não deveria criar um motorista com uma placa inválida', async () => {
     carPlate: 'AAA999',
     isDriver: true
   };
-  const accountService = new AccountService();
-  await expect(accountService.signup(input)).rejects.toThrow('Invalid plate');
+  await expect(signup.execute(input)).rejects.toThrow('Invalid plate');
 });

@@ -5,8 +5,6 @@ import AccountDAODatabase from "./AccountDAODatabase";
 import Account from "./Account";
 
 export default class AccountService {
-
-
   constructor(
     readonly accountDAO: AccountDAO = new AccountDAODatabase(),
     readonly cpfValidator: CpfValidator = new CpfValidator(),
