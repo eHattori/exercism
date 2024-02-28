@@ -15,12 +15,14 @@ export default class RideService {
 
   async requestRide(input: any) {
     const account = await this.accountDAO.getById(input.passengerId);
-    if (!account.is_passenger) throw new Error('Account is not from passenger');
+    if (!account?.isPassenger) throw new Error('Account is not from passenger');
+
     const ridesNotCompleted = await this.rideDAO.getActiveRidesByPassengerId(input.passengerId);
     if (ridesNotCompleted.length > 0) throw new Error('This passenger already has ride not completed');
 
     const ride = Ride.create(input.passengerId, input.from.lat, input.from.long, input.to.lat, input.to.long);
     await this.rideDAO.save(ride);
+
     return {
       rideId: ride.rideId,
     };
@@ -33,7 +35,7 @@ export default class RideService {
 
   async acceptRide(input: any) {
     const account = await this.accountDAO.getById(input.driverId);
-    if (!account.is_driver) throw new Error('Account is not from a driver');
+    if (!account?.isDriver) throw new Error('Account is not from a driver');
 
     const ride = await this.getRide(input.rideId);
     

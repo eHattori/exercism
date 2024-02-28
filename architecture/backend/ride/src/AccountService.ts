@@ -1,9 +1,8 @@
-import crypto from "crypto";
-import pgp from "pg-promise";
 import CpfValidator from "./CpfValidator";
 import MailerGateway from "./MailerGateway";
 import AccountDAO from "./AccountDAO";
 import AccountDAODatabase from "./AccountDAODatabase";
+import Account from "./Account";
 
 export default class AccountService {
 
@@ -15,23 +14,14 @@ export default class AccountService {
   }
 
   async signup(input: any) {
-    const accountId = crypto.randomUUID();
-    const verificationCode = crypto.randomUUID();
-    const date = new Date();
     const existingAccount = await this.accountDAO.getByEmail(input.email);
-
     if (existingAccount) throw new Error("Account already exists");
-    if (!input.name.match(/[a-zA-Z] [a-zA-Z]+/)) throw new Error("Invalid name");
-    if (!input.email.match(/^(.+)@(.+)$/)) throw new Error("Invalid email");
-    if (!this.cpfValidator.validate(input.cpf)) throw new Error("Invalid cpf");
-    if (input.isDriver && !input.carPlate.match(/[A-Z]{3}[0-9]{4}/)) throw new Error("Invalid plate");
 
-    input.accountId = accountId;
-    input.date = date;
-    await this.accountDAO.save(input);
-    await this.mailerGateway.send(input.email, "Verification", `Please verify your code at first login ${verificationCode}`);
+    const account = Account.create(input.name, input.email, input.cpf, input.isPassenger, input.isDriver, input.carPlate);
+    await this.accountDAO.save(account);
+    await this.mailerGateway.send(account.email, "Verification", `Please verify your code at first login ${account.verificationCode}`);
     return {
-      accountId
+      accountId: account.accountId,
     };
   }
 

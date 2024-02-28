@@ -10,10 +10,10 @@ test('Deveria criar um passageiro', async () => {
   const accountService = new AccountService();
   const output = await accountService.signup(input);
   const account = await accountService.getAccount(output.accountId);
-  expect(account.account_id).toBeDefined();
-  expect(account.name).toBe(input.name);
-  expect(account.email).toBe(input.email);
-  expect(account.cpf).toBe(input.cpf);
+  expect(account?.accountId).toBeDefined();
+  expect(account?.name).toBe(input.name);
+  expect(account?.email).toBe(input.email);
+  expect(account?.cpf).toBe(input.cpf);
 });
 
 test('Não deveria criar um passageiro repetido', async () => {
@@ -72,12 +72,12 @@ test('Deveria criar um motorista', async () => {
   const accountService = new AccountService();
   const output = await accountService.signup(input);
   const account = await accountService.getAccount(output.accountId);
-  expect(account.account_id).toBeDefined();
-  expect(account.name).toBe(input.name);
-  expect(account.email).toBe(input.email);
-  expect(account.cpf).toBe(input.cpf);
-  expect(account.car_plate).toBe(input.carPlate);
-  expect(account.is_driver).toBeTruthy();
+  expect(account?.accountId).toBeDefined();
+  expect(account?.name).toBe(input.name);
+  expect(account?.email).toBe(input.email);
+  expect(account?.cpf).toBe(input.cpf);
+  expect(account?.carPlate).toBe(input.carPlate);
+  expect(account?.isDriver).toBeTruthy();
 });
 
 test('Não deveria criar um motorista com uma placa inválida', async () => {
@@ -91,5 +91,3 @@ test('Não deveria criar um motorista com uma placa inválida', async () => {
   const accountService = new AccountService();
   await expect(accountService.signup(input)).rejects.toThrow('Invalid plate');
 });
-
-
