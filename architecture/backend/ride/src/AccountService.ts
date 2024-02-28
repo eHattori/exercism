@@ -1,14 +1,13 @@
 import CpfValidator from "./CpfValidator";
 import MailerGateway from "./MailerGateway";
 import AccountDAO from "./AccountDAO";
-import AccountDAODatabase from "./AccountDAODatabase";
 import Account from "./Account";
 
 export default class AccountService {
   constructor(
-    readonly accountDAO: AccountDAO = new AccountDAODatabase(),
-    readonly cpfValidator: CpfValidator = new CpfValidator(),
-    readonly mailerGateway: MailerGateway = new MailerGateway()) {
+    readonly accountDAO: AccountDAO,
+    readonly cpfValidator: CpfValidator,
+    readonly mailerGateway: MailerGateway) {
   }
 
   async signup(input: any) {

@@ -1,15 +1,12 @@
-import crypto from "crypto";
 import RideDAO from "./RideDAO";
-import { RideDAODatabase } from "./RideDAODatabase";
 import AccountDAO from "./AccountDAO";
-import AccountDAODatabase from "./AccountDAODatabase";
 import Ride from "./Ride";
 
 export default class RideService {
 
   constructor(
-    readonly rideDAO: RideDAO = new RideDAODatabase(),
-    readonly accountDAO: AccountDAO = new AccountDAODatabase()
+    readonly rideDAO: RideDAO,
+    readonly accountDAO: AccountDAO
   ) {
   }
 

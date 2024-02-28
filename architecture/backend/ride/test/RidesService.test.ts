@@ -1,18 +1,29 @@
 import AcceptRide from "../src/AcceptRide";
+import AccountDAODatabase from "../src/AccountDAODatabase";
+import Connection from "../src/Connection";
 import GetRide from "../src/GetRide";
+import MailerGateway from "../src/MailerGateway";
+import PgPromiseAdapter from "../src/PgPromiseAdapter";
 import RequestRide from "../src/RequestRide";
+import { RideDAODatabase } from "../src/RideDAODatabase";
 import Signup from "../src/Signup";
 
 let signup: Signup;
 let requestRide: RequestRide;
 let getRide: GetRide;
 let acceptRide: AcceptRide;
+let connection: Connection;
 
-beforeAll(() => {
-  signup = new Signup();
-  requestRide = new RequestRide();
-  getRide = new GetRide();
-  acceptRide = new AcceptRide();
+beforeEach(() => {
+  connection = new PgPromiseAdapter();
+  const accountDAO = new AccountDAODatabase(connection);
+  const rideDAO = new RideDAODatabase(connection);
+  const mailerGateway = new MailerGateway();
+
+  signup = new Signup(accountDAO, mailerGateway);
+  requestRide = new RequestRide(rideDAO, accountDAO);
+  getRide = new GetRide(rideDAO);
+  acceptRide = new AcceptRide(rideDAO, accountDAO);
 });
 
 test("Deve solicitar uma corrida e receber o rideId", async () => {
@@ -299,5 +310,9 @@ test("Não deve aceitar uma corrida se o motorista ja estiver em uma corrida", a
   };
 
   await expect(acceptRide.execute(inputAcceptRide2)).rejects.toThrow(new Error('The Driver is not available'));
+});
+
+afterEach(async () => {
+  await connection.close();
 });
 

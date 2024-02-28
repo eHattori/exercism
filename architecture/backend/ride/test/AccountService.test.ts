@@ -1,12 +1,20 @@
+import AccountDAODatabase from "../src/AccountDAODatabase";
+import Connection from "../src/Connection";
 import GetAccount from "../src/GetAccount";
+import MailerGateway from "../src/MailerGateway";
+import PgPromiseAdapter from "../src/PgPromiseAdapter";
 import Signup from "../src/Signup";
 
 let signup: Signup;
 let getAccount: GetAccount;
+let connection: Connection; 
 
-beforeAll(() => {
-  signup = new Signup();
-  getAccount = new GetAccount();
+beforeEach(() => {
+  connection = new PgPromiseAdapter();
+  const accountDAO = new AccountDAODatabase(connection);
+  const mailerGateway = new MailerGateway();
+  signup = new Signup(accountDAO, mailerGateway);
+  getAccount = new GetAccount(accountDAO);
 });
 
 test('Deveria criar um passageiro', async () => {
@@ -92,4 +100,8 @@ test('Não deveria criar um motorista com uma placa inválida', async () => {
     isDriver: true
   };
   await expect(signup.execute(input)).rejects.toThrow('Invalid plate');
+});
+
+afterEach(async () => {
+  await connection.close();
 });

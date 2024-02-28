@@ -1,6 +1,5 @@
 import crypto from "crypto";
 
-
 export default class Ride {
   driverId?: string;
 
