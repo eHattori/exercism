@@ -1,6 +1,6 @@
-import RideDAO from "./RideDAO";
-import AccountDAO from "./AccountDAO";
-import Ride from "./Ride";
+import Ride from "../../domain/Ride";
+import AccountDAO from "../repository/AccountDAO";
+import RideDAO from "../repository/RideDAO";
 
 type Input = {
   passengerId: string,

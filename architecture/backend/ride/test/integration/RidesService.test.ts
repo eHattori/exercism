@@ -1,12 +1,12 @@
-import AcceptRide from "../src/AcceptRide";
-import AccountDAODatabase from "../src/AccountDAODatabase";
-import Connection from "../src/Connection";
-import GetRide from "../src/GetRide";
-import MailerGateway from "../src/MailerGateway";
-import PgPromiseAdapter from "../src/PgPromiseAdapter";
-import RequestRide from "../src/RequestRide";
-import { RideDAODatabase } from "../src/RideDAODatabase";
-import Signup from "../src/Signup";
+import AccountDAODatabase from "../../src/infra/repository/AccountDAODatabase";
+import Connection from "../../src/infra/database/Connection";
+import MailerGateway from "../../src/infra/gateway/MailerGateway";
+import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";
+import { RideDAODatabase } from "../../src/infra/repository/RideDAODatabase";
+import AcceptRide from "../../src/application/usecase/AcceptRide";
+import GetRide from "../../src/application/usecase/GetRide";
+import RequestRide from "../../src/application/usecase/RequestRide";
+import Signup from "../../src/application/usecase/Signup";
 
 let signup: Signup;
 let requestRide: RequestRide;

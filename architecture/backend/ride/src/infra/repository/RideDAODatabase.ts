@@ -1,6 +1,6 @@
-import Connection from "./Connection";
-import Ride from "./Ride";
-import RideDAO from "./RideDAO";
+import Connection from "../database/Connection";
+import Ride from "../../domain/Ride";
+import RideDAO from "../../application/repository/RideDAO";
 
 export class RideDAODatabase implements RideDAO {
   constructor(readonly connection: Connection) { }

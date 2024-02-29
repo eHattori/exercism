@@ -1,4 +1,4 @@
-import AccountDAO from "./AccountDAO";
+import AccountDAO from "../repository/AccountDAO";
 
 export default class GetAccount {
   constructor(readonly accountDAO: AccountDAO) { }

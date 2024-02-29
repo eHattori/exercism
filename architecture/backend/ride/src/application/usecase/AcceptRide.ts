@@ -1,5 +1,5 @@
-import RideDAO from "./RideDAO";
-import AccountDAO from "./AccountDAO";
+import AccountDAO from "../repository/AccountDAO";
+import RideDAO from "../repository/RideDAO";
 
 type Input = {
   rideId: string,

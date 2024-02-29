@@ -1,6 +1,7 @@
-import MailerGateway from "./MailerGateway";
-import AccountDAO from "./AccountDAO";
-import Account from "./Account";
+import Account from "../../domain/Account";
+import MailerGateway from "../../infra/gateway/MailerGateway";
+import AccountDAO from "../repository/AccountDAO";
+
 
 type Input = {
   name: string,

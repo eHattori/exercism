@@ -1,9 +1,11 @@
-import AccountDAODatabase from "../src/AccountDAODatabase";
-import Connection from "../src/Connection";
-import GetAccount from "../src/GetAccount";
-import MailerGateway from "../src/MailerGateway";
-import PgPromiseAdapter from "../src/PgPromiseAdapter";
-import Signup from "../src/Signup";
+import AccountDAODatabase from "../../src/infra/repository/AccountDAODatabase";
+import Connection from "../../src/infra/database/Connection";
+
+import MailerGateway from "../../src/infra/gateway/MailerGateway";
+import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter";
+import GetAccount from "../../src/application/usecase/GetAccount";
+import Signup from "../../src/application/usecase/Signup";
+
 
 let signup: Signup;
 let getAccount: GetAccount;

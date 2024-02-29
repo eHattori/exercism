@@ -1,4 +1,4 @@
-import CpfValidator from "../src/CpfValidator";
+import CpfValidator from "../../src/domain/CpfValidator";
 
 const cpfValidator = new CpfValidator();
 test.each([

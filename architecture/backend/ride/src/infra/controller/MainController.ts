@@ -1,6 +1,7 @@
-import GetAccount from "./GetAccount";
-import HttpServer from "./HttpServer";
-import Signup from "./Signup";
+import HttpServer from "../http/HttpServer";
+import GetAccount from "../../application/usecase/GetAccount";
+import Signup from "../../application/usecase/Signup";
+
 
 export default class MainController {
   constructor(
